@@ -5,10 +5,11 @@ import axios from 'axios';
 import { useState } from 'react';
 import AddUser from './AddUser';
 import Modal from './Modal';
+import { useModal } from '../context/ModalContext';
 
 const Users = () => {
-    const [modal, setModal] = useState({ isVisible: false, component: null, title: '' });
-
+    const [modal, setModal] = useState({ component: null, title: '' });
+    const { isModalOpen, openModal, closeModal } = useModal();
     const getAllUsers = async () => {
         const { data } = await axios.get('http://localhost:8080/user/');
         return data;
@@ -17,18 +18,18 @@ const Users = () => {
     const { data: users, isLoading, error } = useQuery({ queryKey: ['fetchUsers'], queryFn: getAllUsers });
     console.log(users);
 
-
     if (isLoading) {
         return <p>Loading Data...</p>
     }
 
     const handleAddUser = () => {
-        setModal({ isVisible: true, component: <AddUser />, title: "Add New User" })
+        openModal();
+        setModal({ component: <AddUser />, title: "Add New User" })
     }
 
 
     return (
-        <div className='px-5'>
+        <div className='px-5 pb-10 overflow-auto'>
             <div className='flex justify-end pb-5 gap-3'>
                 <div className='inline-flex justify-end gap-1 items-center border rounded-lg bg-white shadow  pl-2 pr-5 py-1'>
                     <input className=' bg-white pr-5 py-1 focus-within:outline-none' />
@@ -51,7 +52,7 @@ const Users = () => {
                             <p>{index + 1}</p>
                         </div>
                         <div className='inline-flex gap-4 items-center'>
-                            <div className='w-12 h-12 bg-light p-1 rounded-full shadow-md flex justify-center items-center font-bold text-theme'>{user.username.charAt(0)}</div>
+                            <div className='w-12 h-12 bg-light p-1 rounded-full shadow-md flex justify-center items-center font-bold text-theme uppercase'>{user.username.charAt(0)}</div>
                             <p>{user.username}</p>
                         </div>
                         <div className='truncate'>{user.email}</div>
@@ -74,7 +75,9 @@ const Users = () => {
                     </div>)
             })}
 
-            {(modal.isVisible) && <Modal children={modal.component} title={modal.title} isVisible={setModal} />}
+            {isModalOpen && <Modal children={modal.component} title={modal.title} />}
+
+            {/* {(modal.isVisible) && <Modal children={modal.component} title={modal.title} isVisible={setModal} />} */}
 
         </div>
     )

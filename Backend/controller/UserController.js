@@ -20,6 +20,7 @@ const getUserById = async (id) => {
 }
 
 const addUsers = async (req, res, next) => {
+    console.log(req.body);
     const users = await User.create(req.body);
     res.status(201).json(users);
 }
