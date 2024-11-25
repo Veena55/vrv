@@ -4,6 +4,8 @@ const Role = require('./Role');
 const Permission = require('./Permission');
 const RolePermission = require('./RolePermission');
 const UserPermission = require('./UserPermission');
+const db = require('../db');
+
 
 console.log("Hiiiii");
 
@@ -29,3 +31,13 @@ id name role
 // 3. User ↔ Permission (Many-to-Many for Overrides)
 User.belongsToMany(Permission, { through: UserPermission });
 Permission.belongsToMany(User, { through: UserPermission });
+
+
+(async () => {
+    try {
+        await db.sync({ force: false }); // Set force to true to drop existing tables and recreate
+        console.log('All models were synchronized successfully.');
+    } catch (error) {
+        console.error('Error syncing models:', error.message);
+    }
+})();

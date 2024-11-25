@@ -12,6 +12,8 @@ const Role = db.define('Role', {
         allowNull: false,
         unique: true,
     },
+}, {
+    timestamps: true
 });
 
 module.exports = Role;

@@ -4,7 +4,7 @@ import React from 'react'
 
 const Role = () => {
     return (
-        <div className='px-2 py-5'>
+        <div className='p-5'>
             <div className='flex justify-between py-2 px-10 rounded-lg bg-light text-[#9a989a] font-semibold'>
                 <div>ID</div>
                 <div>Name</div>
