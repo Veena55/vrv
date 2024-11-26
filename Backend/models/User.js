@@ -25,7 +25,7 @@ const User = db.define('User', {
     },
     isActive: {
         type: DataTypes.STRING,
-        default: true
+        allowNull: false
     }
 }, {
     timestamps: true

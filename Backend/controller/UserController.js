@@ -26,6 +26,7 @@ const addUsers = async (req, res, next) => {
 }
 
 const editUser = async (req, res, next) => {
+    console.log(req.body);
     const [isUpdated] = await User.update(req.body, { where: { id: req.params.id } });
     if (isUpdated) {
         const user = await getUserById(req.params.id);

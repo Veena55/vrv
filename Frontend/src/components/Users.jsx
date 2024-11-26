@@ -1,30 +1,49 @@
 import { faCircle, faEdit, faPlus, faSearch, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useState } from 'react';
 import AddUser from './AddUser';
 import Modal from './Modal';
 import { useModal } from '../context/ModalContext';
+import EditUser from './EditUser';
+import { useUser } from '../context/UserContext';
+import ConfirmDelete from './ConfirmDelete';
 
 const Users = () => {
-    const [modal, setModal] = useState({ component: null, title: '' });
-    const { isModalOpen, openModal, closeModal } = useModal();
-    const getAllUsers = async () => {
-        const { data } = await axios.get('http://localhost:8080/user/');
-        return data;
-    }
+    const [filterUser, setfilterUser] = useState([]);
+    const { isModalOpen, openModal, getModalContent } = useModal();
+    const { users, isLoading, error } = useUser();
+    console.log("uuu", users);
 
-    const { data: users, isLoading, error } = useQuery({ queryKey: ['fetchUsers'], queryFn: getAllUsers });
-    console.log(users);
+    // const getAllUsers = async () => {
+    //     const { data } = await axios.get('http://localhost:8080/user/');
+    //     return data;
+    // }
+
+    // const { data: users, isLoading, error } = useQuery({ queryKey: ['fetchUsers'], queryFn: getAllUsers });
+    // console.log(users);
 
     if (isLoading) {
         return <p>Loading Data...</p>
     }
 
-    const handleAddUser = () => {
+    // const getUserById = (id) => {
+    //     const filteredUser = users.filter(user => user.id == id);
+    //     // console.log(filteredUser, id);
+    //     setfilterUser(filteredUser);
+    // }
+
+    const handleModal = (id = null, modalType) => {
         openModal();
-        setModal({ component: <AddUser />, title: "Add New User" })
+        if (modalType == 'add') {
+            getModalContent({ component: <AddUser />, title: "Add New User" })
+        } else if (modalType == 'edit') {
+            const filteredUser = users.filter(user => user.id == id);
+            getModalContent({ component: <EditUser user={filteredUser[0]} />, title: "Edit User" })
+        }
+        else if (modalType == 'delete') {
+            const filteredUser = users.filter(user => user.id == id);
+            getModalContent({ component: <ConfirmDelete data={filteredUser[0]} />, title: "Delete User" })
+        }
     }
 
 
@@ -35,7 +54,7 @@ const Users = () => {
                     <input className=' bg-white pr-5 py-1 focus-within:outline-none' />
                     <FontAwesomeIcon icon={faSearch} className='text-[#9a989a]' />
                 </div>
-                <button className='bg-theme px-3 py-1 border-theme border text-white rounded-md' onClick={handleAddUser}><FontAwesomeIcon icon={faPlus} /> Add</button>
+                <button className='bg-theme px-3 py-1 border-theme border text-white rounded-md' onClick={() => handleModal("add")}><FontAwesomeIcon icon={faPlus} /> Add</button>
             </div>
             <div className='grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center py-2 px-5 rounded-lg bg-light text-[#9a989a] font-semibold'>
                 <div>ID</div>
@@ -56,9 +75,9 @@ const Users = () => {
                             <p>{user.username}</p>
                         </div>
                         <div className='truncate'>{user.email}</div>
-                        <div className=''>{!user.role ? 'NA' : user.role}</div>
+                        <div className={`${!user.Role ? 'text-red-500' : 'text-theme'} `}>{!user.Role ? 'NA' : user.Role.roleName}</div>
                         <div className="flex justify-center">
-                            {user.isActive ?
+                            {user.isActive == "1" ?
                                 <div className='bg-successBg text-succesText rounded-full shadow flex w-[max-content]  items-center justify-start px-5 text-sm gap-1 font-semibold'>
                                     <FontAwesomeIcon icon={faCircle} className='text-[8px]' />
                                     <p className='text-center m-0 p-0'>Active</p>
@@ -69,13 +88,13 @@ const Users = () => {
                                 </div>}
                         </div>
                         <div className='flex gap-2 justify-center items-center'>
-                            <FontAwesomeIcon icon={faEdit} className='text-theme' />
-                            <FontAwesomeIcon icon={faTrashCan} className='text-red-500' />
+                            <FontAwesomeIcon icon={faEdit} className='text-theme cursor-pointer' onClick={() => handleModal(user.id, "edit")} />
+                            <FontAwesomeIcon icon={faTrashCan} className='text-red-500 cursor-pointer' onClick={() => handleModal(user.id, "delete")} />
                         </div>
                     </div>)
             })}
 
-            {isModalOpen && <Modal children={modal.component} title={modal.title} />}
+            {isModalOpen && <Modal />}
 
             {/* {(modal.isVisible) && <Modal children={modal.component} title={modal.title} isVisible={setModal} />} */}
 

@@ -5,11 +5,12 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 
-const AddUser = () => {
-    const [formData, setformData] = useState({ username: '', email: '', passwordHash: '', roleId: null, isActive: false });
-    const [role, setRole] = useState({ id: null, name: '' });
+const EditUser = ({ user }) => {
+    const [formData, setformData] = useState({ username: user.username, email: user.email, roleId: null, isActive: user.isActive === '1' });
+    const [role, setRole] = useState({ id: null, name: user.Role?.roleName });
     const queryClient = useQueryClient();
     const { closeModal } = useModal();
+    console.log(user);
 
 
     //fetch all roles
@@ -19,25 +20,25 @@ const AddUser = () => {
         return data;
     }
 
-    //fetch all users
-    const addUser = async () => {
-        const { data } = await axios.post('http://localhost:8080/user/add', formData);
+    //edit user
+    const editUser = async () => {
+        const { data } = await axios.put(`http://localhost:8080/user/edit/${user.id}`, formData);
         return data;
     }
 
-    //call allUsers with useQuery
+    //fetch roles with useQuery
     const { data: roles, isLoading, error } = useQuery({ queryKey: ['fetchRoles'], queryFn: getAllRoles });
-    console.log(roles);
+    // console.log(roles);
 
     //create mutation
     const mutation = useMutation({
-        mutationFn: addUser,
+        mutationFn: editUser,
         onSuccess: () => {
             queryClient.invalidateQueries(['fetchUsers']);
             closeModal();
         },
         onError: (error) => {
-            console.error('Error adding user:', error);
+            console.error('Error editing user:', error);
         },
     });
 
@@ -73,20 +74,18 @@ const AddUser = () => {
                 <div className='flex flex-col mb-3'>
                     <label className='text-light_title font-semibold'>Enter User Name:</label>
                     <input type="text" name='username' className='bg-white px-2 py-2 mt-2 rounded-lg focus-within:outline-none border focus-within:outline-theme focus-within:outline-[2px]'
+                        value={formData.username}
                         onChange={handleChangeData} />
                 </div>
                 <div className='flex flex-col mb-3'>
                     <label className='text-light_title font-semibold'>Enter Email Address:</label>
-                    <input type="email" name='email' className='bg-white px-2 py-2 rounded-lg mt-2 focus-within:outline-none border focus-within:outline-theme focus-within:outline-[2px]'
-                        onChange={handleChangeData} />
+                    <input type="email" name='email' className='bg-white px-2 py-2 rounded-lg mt-2 focus-within:outline-none border focus-within:outline-theme focus-within:outline-[2px] disabled:cursor-not-allowed disabled:bg-light_theme'
+                        value={formData.email}
+                        onChange={handleChangeData} readOnly disabled />
                 </div>
+
                 <div className='flex flex-col mb-3'>
-                    <label className='text-light_title font-semibold'>Enter Temporary Password:</label>
-                    <input type="text" name='passwordHash' className='bg-white px-2 py-2 rounded-lg mt-2 focus-within:outline-none border focus-within:outline-theme focus-within:outline-[2px]'
-                        onChange={handleChangeData} />
-                </div>
-                <div className='flex flex-col mb-3'>
-                    <label className='text-light_title font-semibold'>Assign Role</label>
+                    <label className='text-light_title font-semibold'>Modify Role</label>
                     <div className='border relative group mt-2 rounded-lg'>
                         <label className='p-2 block'>{!role.name ? '-- Select --' : role.name}</label>
 
@@ -105,7 +104,9 @@ const AddUser = () => {
                 </div>
                 <div className='flex gap-1 my-3 items-center'>
                     <input type="checkbox" name='isActive' className='bg-white px-2 py-2 mt-2 focus-within:outline-none border focus-within:border-theme'
-                        onChange={handleChangeData} />
+                        onChange={handleChangeData}
+                        checked={formData.isActive == '1'}
+                    />
                     <label>Set Active</label>
                 </div>
                 <div className="mb-2 mt-5">
@@ -122,4 +123,4 @@ const AddUser = () => {
     );
 };
 
-export default AddUser;
+export default EditUser;

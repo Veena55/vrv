@@ -1,9 +1,17 @@
+const { Sequelize } = require("sequelize");
 const Permission = require("../models/Permission");
 const Role = require("../models/Role");
 const User = require("../models/User");
 
 const getAllRoles = async (req, res, next) => {
-    const roles = await Role.findAll({ include: [User, Permission] });
+    const roles = await Role.findAll({
+        include: [User, Permission], attributes: {
+            include: [
+                // Format updatedAt date to 'YYYY-MM-DD' (or any format you prefer)
+                [Sequelize.fn('DATE_FORMAT', Sequelize.col('Role.updatedAt'), '%Y-%m-%d'), 'updatedAt']
+            ]
+        }
+    });
     res.status(200).json(roles);
 }
 
@@ -16,7 +24,14 @@ const getRole = async (req, res, next) => {
 }
 
 const getRoleById = async (id) => {
-    return await Role.findByPk(id, { include: [User, Permission] });
+    return await Role.findByPk(id, {
+        include: [User, Permission], attributes: {
+            include: [
+                // Format updatedAt date to 'YYYY-MM-DD' (or any format you prefer)
+                [Sequelize.fn('DATE_FORMAT', Sequelize.col('Role.updatedAt'), '%Y-%m-%d')]
+            ]
+        }
+    });
 }
 
 const addRoles = async (req, res, next) => {
