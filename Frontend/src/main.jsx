@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RoleProvider } from './context/RoleContext.jsx'
 import { ModalProvider } from './context/ModalContext.jsx'
 import { PermissionProvider } from './context/PermissionContext.jsx'
+import Login from './components/Login.jsx'
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,8 @@ createRoot(document.getElementById('root')).render(
         <UserProvider>
           <MenuProvider>
             <ModalProvider>
-              <App />
+              <Login />
+              {/* <App /> */}
             </ModalProvider>
           </MenuProvider>
         </UserProvider>

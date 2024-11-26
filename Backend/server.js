@@ -4,17 +4,34 @@ require('./models/RelationshipMapping');
 
 const userRoute = require('./routes/user');
 const roleRoute = require('./routes/role');
+const loginRoute = require('./routes/login');
 const permissionRoute = require('./routes/permission');
 const cors = require('cors');
 const app = express();
+const session = require('express-session');
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: process.enev.SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax', // Helps with CSRF protection
+        maxAge: 1000 * 60 * 60 * 24,//After 1 day, expiry!
+    }
+}))
+
 
 app.use('/role', roleRoute);
 app.use('/permission', permissionRoute);
 app.use('/user', userRoute);
+app.use('/login', loginRoute);
+
+
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log("Server Connection Built!", process.env.SERVER_PORT);

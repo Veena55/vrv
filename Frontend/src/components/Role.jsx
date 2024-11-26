@@ -6,7 +6,6 @@ import Modal from './Modal'
 import { useModal } from '../context/ModalContext'
 import AddRole from './AddRole'
 import EditRole from './EditRole'
-import ConfirmDelete from './DeleteUser'
 import DeleteRole from './DeleteRole'
 
 const Role = () => {

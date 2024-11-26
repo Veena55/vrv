@@ -13,24 +13,13 @@ const Users = () => {
     const { isModalOpen, openModal, getModalContent } = useModal();
     const { users, isLoading, error } = useUser();
     console.log("uuu", users);
-
-    // const getAllUsers = async () => {
-    //     const { data } = await axios.get('http://localhost:8080/user/');
-    //     return data;
-    // }
-
-    // const { data: users, isLoading, error } = useQuery({ queryKey: ['fetchUsers'], queryFn: getAllUsers });
-    // console.log(users);
+    ;
 
     if (isLoading) {
         return <p>Loading Data...</p>
     }
 
-    // const getUserById = (id) => {
-    //     const filteredUser = users.filter(user => user.id == id);
-    //     // console.log(filteredUser, id);
-    //     setfilterUser(filteredUser);
-    // }
+
 
     const handleModal = (id = null, modalType) => {
         openModal();
@@ -71,7 +60,7 @@ const Users = () => {
                             <p>{index + 1}</p>
                         </div>
                         <div className='inline-flex gap-4 items-center'>
-                            <div className='w-12 h-12 bg-light p-1 rounded-full shadow-md flex justify-center items-center font-bold text-theme uppercase'>{user.username.charAt(0)}</div>
+                            <div className={`w-12 h-12 p-1 rounded-full shadow-md flex justify-center items-center font-bold text-theme uppercase ${index % 2 == 0 ? 'bg-light_theme' : 'bg-white'}`}>{user.username.charAt(0)}</div>
                             <p>{user.username}</p>
                         </div>
                         <div className='truncate'>{user.email}</div>
