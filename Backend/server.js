@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: process.enev.SECRET_KEY,
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {

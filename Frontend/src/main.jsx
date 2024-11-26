@@ -9,26 +9,29 @@ import { RoleProvider } from './context/RoleContext.jsx'
 import { ModalProvider } from './context/ModalContext.jsx'
 import { PermissionProvider } from './context/PermissionContext.jsx'
 import Login from './components/Login.jsx'
+import { ThemeProvider } from './context/ThemeContext.jsx'
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
-    {/* <RoleProvider> */}
-    <PermissionProvider>
-      <RoleProvider>
-        <UserProvider>
-          <MenuProvider>
-            <ModalProvider>
-              <Login />
-              {/* <App /> */}
-            </ModalProvider>
-          </MenuProvider>
-        </UserProvider>
-      </RoleProvider>
-    </PermissionProvider>
 
-    {/* </RoleProvider> */}
+    <ThemeProvider>
+      <PermissionProvider>
+        <RoleProvider>
+          <UserProvider>
+            <MenuProvider>
+              <ModalProvider>
+                {/* <Login /> */}
+                <App />
+              </ModalProvider>
+            </MenuProvider>
+          </UserProvider>
+        </RoleProvider>
+      </PermissionProvider>
+    </ThemeProvider>
+
+
   </QueryClientProvider>
   ,
 

@@ -7,9 +7,10 @@ import { useModal } from '../context/ModalContext';
 import EditUser from './EditUser';
 import { useUser } from '../context/UserContext';
 import DeleteUser from './DeleteUser';
+import { useTheme } from '../context/ThemeContext';
 
 const Users = () => {
-    const [filterUser, setfilterUser] = useState([]);
+    const { theme, darkTheme, lightTheme } = useTheme();
     const { isModalOpen, openModal, getModalContent } = useModal();
     const { users, isLoading, error } = useUser();
     console.log("uuu", users);
@@ -39,13 +40,13 @@ const Users = () => {
     return (
         <div className='px-5 pb-10 overflow-auto'>
             <div className='flex justify-end pb-5 gap-3'>
-                <div className='inline-flex justify-end gap-1 items-center border rounded-lg bg-white shadow  pl-2 pr-5 py-1'>
-                    <input className=' bg-white pr-5 py-1 focus-within:outline-none' />
+                <div className={`inline-flex justify-end gap-1 items-center rounded-lg ${theme == 'light' ? 'bg-white border' : 'bg-gray-800'} shadow  pl-2 pr-5 py-1`}>
+                    <input className={`${theme == 'light' ? 'bg-white' : 'bg-gray-900 text-white'}  pr-5 py-1 focus-within:outline-none`} />
                     <FontAwesomeIcon icon={faSearch} className='text-[#9a989a]' />
                 </div>
                 <button className='bg-theme px-3 py-1 border-theme border text-white rounded-md' onClick={() => handleModal(null, "add")}><FontAwesomeIcon icon={faPlus} /> Add</button>
             </div>
-            <div className='grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center py-2 px-5 rounded-lg bg-light text-[#9a989a] font-semibold'>
+            <div className={`grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center py-2 px-5 rounded-lg ${theme == 'light' ? 'bg-white text-[#9a989a]' : 'bg-gray-800 text-white'}  font-semibold`}>
                 <div>ID</div>
                 <div>Name</div>
                 <div className=''>Email</div>
@@ -55,7 +56,7 @@ const Users = () => {
             </div>
             {users && users.map((user, index) => {
                 return (
-                    <div key={user.id} className={`grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center py-2 px-5 rounded-lg ${index % 2 == 0 ? 'bg-white' : 'bg-light'}`}>
+                    <div key={user.id} className={`grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center mt-1 py-2 px-5 rounded-lg ${theme == 'light' ? (index % 2 == 0 ? 'bg-light' : 'bg-white') : (index % 2 == 0 ? 'bg-gray-900 text-white' : 'bg-black text-white')}`}>
                         <div>
                             <p>{index + 1}</p>
                         </div>
@@ -80,14 +81,14 @@ const Users = () => {
                             <FontAwesomeIcon icon={faEdit} className='text-theme cursor-pointer' onClick={() => handleModal(user.id, "edit")} />
                             <FontAwesomeIcon icon={faTrashCan} className='text-red-500 cursor-pointer' onClick={() => handleModal(user.id, "delete")} />
                         </div>
-                    </div>)
+                    </div >)
             })}
 
             {isModalOpen && <Modal />}
 
             {/* {(modal.isVisible) && <Modal children={modal.component} title={modal.title} isVisible={setModal} />} */}
 
-        </div>
+        </div >
     )
 }
 
