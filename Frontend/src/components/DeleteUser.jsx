@@ -3,7 +3,7 @@ import { useModal } from '../context/ModalContext'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-const ConfirmDelete = ({ data }) => {
+const DeleteUser = ({ data }) => {
     const queryClient = useQueryClient();
 
     console.log(data);
@@ -49,5 +49,5 @@ const ConfirmDelete = ({ data }) => {
     )
 }
 
-export default ConfirmDelete
+export default DeleteUser
 

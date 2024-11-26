@@ -6,6 +6,8 @@ import { useModal } from '../context/ModalContext'
 import AddRole from './AddRole'
 import { usePermission } from '../context/PermissionContext'
 import AddPermission from './AddPermission'
+import EditPermission from './EditPermissions'
+import DeletePermission from './DeletePermission'
 
 const Permission = () => {
 
@@ -16,16 +18,17 @@ const Permission = () => {
     const handleModal = (id = null, modalType) => {
         openModal();
         if (modalType == 'add') {
-            console.log("hhh");
             getModalContent({ component: <AddPermission />, title: "Add New Permission" })
         }
         else if (modalType == 'edit') {
-            const filteredUser = users.filter(user => user.id == id);
-            getModalContent({ component: <EditUser user={filteredUser[0]} />, title: "Edit Role" })
+            const filteredPermission = permissions.filter(permission => permission.id == id);
+            // console.log(filteredPermission[0], "hhhh");
+
+            getModalContent({ component: <EditPermission permission={filteredPermission[0]} />, title: "Edit Permission" })
         }
         else if (modalType == 'delete') {
-            const filteredUser = users.filter(user => user.id == id);
-            getModalContent({ component: <ConfirmDelete data={filteredUser[0]} />, title: "Delete Role" })
+            const filteredPermission = permissions.filter(permission => permission.id == id);
+            getModalContent({ component: <DeletePermission data={filteredPermission[0]} />, title: "Delete Permission" })
         }
     }
 
@@ -49,7 +52,7 @@ const Permission = () => {
                         <div>{permission.updatedAt}</div>
                         <div className='flex gap-2 items-center'>
                             <FontAwesomeIcon icon={faEdit} className='text-theme' onClick={() => handleModal(permission.id, "edit")} />
-                            <FontAwesomeIcon icon={faTrashCan} className='text-red-500' onClick={() => handleModal(permission.id, "role")} />
+                            <FontAwesomeIcon icon={faTrashCan} className='text-red-500' onClick={() => handleModal(permission.id, "delete")} />
                         </div>
                     </div>
 

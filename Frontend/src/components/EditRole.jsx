@@ -4,16 +4,17 @@ import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 import { usePermission } from '../context/PermissionContext';
 
-const AddRole = () => {
-    const [formData, setFormData] = useState({ roleName: '' });
-    const [selectedPermissions, setSelectedPermissions] = useState([]);
+const EditRole = ({ role }) => {
+
+    const [formData, setFormData] = useState({ roleName: role.roleName });
+    const [selectedPermissions, setSelectedPermissions] = useState(role.Permissions.map(permission => permission.id));
     const queryClient = useQueryClient();
     const { closeModal } = useModal();
     const { permissions, isLoading, error } = usePermission();
 
-    // Function to add a role
-    const addRole = async () => {
-        const { data } = await axios.post('http://localhost:8080/role/add', {
+    // Function to edit a role
+    const editRole = async () => {
+        const { data } = await axios.put(`http://localhost:8080/role/edit/${role.id}`, {
             roleName: formData.roleName,
             permissions: selectedPermissions,
         });
@@ -22,8 +23,9 @@ const AddRole = () => {
 
     // Create mutation
     const mutation = useMutation({
-        mutationFn: addRole,
+        mutationFn: editRole,
         onSuccess: () => {
+            console.log('Mutation succeeded, closing modal');
             queryClient.invalidateQueries(['fetchRoles']);
             closeModal();
         },
@@ -54,6 +56,8 @@ const AddRole = () => {
 
     // Toggle permission selection
     const handlePermissionToggle = (id, permissionName) => {
+        console.log(id);
+
         setSelectedPermissions(prev => {
             if (prev.includes(id)) {
                 // Deselect permission
@@ -68,6 +72,7 @@ const AddRole = () => {
     // Get the permission names for selected permissions
     const selectedPermissionNames = permissions.filter(permission => selectedPermissions.includes(permission.id))
         .map(permission => permission.permissionName).join(', ');
+    // console.log(selectedPermissions);
 
     return (
         <div className='py-5 px-10'>
@@ -78,6 +83,7 @@ const AddRole = () => {
                         type="text"
                         name='roleName'
                         className='bg-white px-2 py-2 mt-2 rounded-lg focus-within:outline-none border focus-within:outline-theme focus-within:outline-[2px]'
+                        value={formData.roleName}
                         onChange={handleChangeData}
                     />
                 </div>
@@ -119,4 +125,4 @@ const AddRole = () => {
     );
 };
 
-export default AddRole;
+export default EditRole;

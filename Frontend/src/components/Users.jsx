@@ -6,7 +6,7 @@ import Modal from './Modal';
 import { useModal } from '../context/ModalContext';
 import EditUser from './EditUser';
 import { useUser } from '../context/UserContext';
-import ConfirmDelete from './ConfirmDelete';
+import DeleteUser from './DeleteUser';
 
 const Users = () => {
     const [filterUser, setfilterUser] = useState([]);
@@ -42,7 +42,7 @@ const Users = () => {
         }
         else if (modalType == 'delete') {
             const filteredUser = users.filter(user => user.id == id);
-            getModalContent({ component: <ConfirmDelete data={filteredUser[0]} />, title: "Delete User" })
+            getModalContent({ component: <DeleteUser data={filteredUser[0]} />, title: "Delete User" })
         }
     }
 
@@ -54,7 +54,7 @@ const Users = () => {
                     <input className=' bg-white pr-5 py-1 focus-within:outline-none' />
                     <FontAwesomeIcon icon={faSearch} className='text-[#9a989a]' />
                 </div>
-                <button className='bg-theme px-3 py-1 border-theme border text-white rounded-md' onClick={() => handleModal("add")}><FontAwesomeIcon icon={faPlus} /> Add</button>
+                <button className='bg-theme px-3 py-1 border-theme border text-white rounded-md' onClick={() => handleModal(null, "add")}><FontAwesomeIcon icon={faPlus} /> Add</button>
             </div>
             <div className='grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center py-2 px-5 rounded-lg bg-light text-[#9a989a] font-semibold'>
                 <div>ID</div>
