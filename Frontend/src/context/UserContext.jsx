@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { createContext, useContext, useState } from "react";
+import api from "../middleware/auth";
 
 const UserContext = createContext();
 
@@ -9,7 +9,8 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
 
     const getAllUsers = async () => {
-        const { data } = await axios.get('http://localhost:8080/user/');
+        const { data } = await api.get('/user/');
+
         return data;
     }
 

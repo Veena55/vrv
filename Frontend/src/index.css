@@ -2,7 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
 
-body {
-    /* background-color: black; */
+::-webkit-scrollbar-track {
+    background-color: #8f8ffc;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4848FE;
+}
+
+.Toastify__toast--error {
+    background-color: #fcc1c1 !important;
+    color: red !important;
+}
+
+.Toastify__toast--success {
+    background-color: #b9fbbe !important;
+    color: #077210 !important;
+}
+
+.Toastify__toast--info {
+    background-color: #d3f5fc !important;
+    color: #0bc0e4 !important;
 }

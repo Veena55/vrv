@@ -18,18 +18,33 @@ const Menu = () => {
     return (
         <div className="flex items-center">
             <div className=
-                {`flex items-center gap-1 ${menu === 'users' ? `${themeColor} border-theme border border-b-0 rounded-tl-md rounded-tr-md text-theme font-semibold` : 'bg-light text-light_title border-b border-light_theme'} py-2 px-5`}
+                {`flex items-center py-2 px-5 gap-1 ${menu === 'users'
+                    ? `${themeColor} border-theme border border-b-0 rounded-tl-md rounded-tr-md text-theme font-semibold`
+                    : theme === 'light'
+                        ? 'text-light_title'
+                        : 'bg-gray-800 text-light_title border-b border-light_theme'
+                    }`}
                 onClick={() => handleMenu("users")}>
                 <FontAwesomeIcon icon={faUser} className="" />
                 <button className="">Users</button>
             </div>
             <div className=
-                {`flex items-center gap-1  ${menu == 'roles' ? `${themeColor} border-theme border border-b-0 rounded-tl-md rounded-tr-md text-theme font-semibold` : 'bg-light text-light_title border-b border-light_theme'} py-2 px-5`}
+                {`flex items-center py-2 px-5 gap-1 ${menu === 'roles'
+                    ? `${themeColor} border-theme border border-b-0 rounded-tl-md rounded-tr-md text-theme font-semibold`
+                    : theme === 'light'
+                        ? 'text-light_title'
+                        : 'bg-gray-800 text-light_title border-b border-light_theme'
+                    }`}
                 onClick={() => handleMenu("roles")}>
                 <FontAwesomeIcon icon={faTag} className="" />
                 <button className="">Roles</button>
             </div>
-            <div className={`flex items-center gap-1  ${menu == 'permissions' ? `${themeColor} border-theme border border-b-0 rounded-tl-md rounded-tr-md text-theme font-semibold` : 'bg-light text-light_title border-b border-light_theme'} py-2 px-5`}
+            <div className={`flex items-center py-2 px-5 gap-1 ${menu === 'permissions'
+                ? `${themeColor} border-theme border border-b-0 rounded-tl-md rounded-tr-md text-theme font-semibold`
+                : theme === 'light'
+                    ? 'text-light_title'
+                    : 'bg-gray-800 text-light_title border-b border-light_theme'
+                }`}
                 onClick={() => handleMenu("permissions")}>
                 <FontAwesomeIcon icon={faKey} className="" />
                 <button className="">Permission</button>

@@ -5,12 +5,16 @@ require('./models/RelationshipMapping');
 const userRoute = require('./routes/user');
 const roleRoute = require('./routes/role');
 const loginRoute = require('./routes/login');
+const authRoute = require('./routes/auth');
 const permissionRoute = require('./routes/permission');
 const cors = require('cors');
 const app = express();
 const session = require('express-session');
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173',  // Allow frontend to make requests
+    credentials: true,               // Allow cookies to be sent with requests
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -30,6 +34,7 @@ app.use('/role', roleRoute);
 app.use('/permission', permissionRoute);
 app.use('/user', userRoute);
 app.use('/login', loginRoute);
+app.use('/auth', authRoute);
 
 
 

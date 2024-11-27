@@ -1,9 +1,17 @@
 const Permission = require("../models/Permission");
 const User = require("../models/User");
 const Role = require("../models/Role");
+const { Sequelize } = require("sequelize");
 
 const getAllPermissions = async (req, res, next) => {
-    const permissions = await Permission.findAll({ include: [Role, User] });
+    const permissions = await Permission.findAll({
+        include: [Role, User], attributes: {
+            include: [
+                // Format updatedAt date to 'YYYY-MM-DD' (or any format you prefer)
+                [Sequelize.fn('DATE_FORMAT', Sequelize.col('Permission.updatedAt'), '%Y-%m-%d'), 'updatedAt']
+            ]
+        }
+    });
     res.status(200).json(permissions);
 }
 
