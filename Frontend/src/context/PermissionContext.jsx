@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from "../middleware/auth";
 
 const PermissionContext = createContext();
 
@@ -9,7 +9,7 @@ export const usePermission = () => useContext(PermissionContext);
 export const PermissionProvider = ({ children }) => {
 
     const getAllPermissions = async () => {
-        const { data } = await axios.get('http://localhost:8080/permission/');
+        const { data } = await api.get('/permission/');
         console.log(data);
 
         return data;

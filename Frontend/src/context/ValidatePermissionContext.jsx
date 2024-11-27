@@ -34,10 +34,6 @@ export const ValidatePermissionProvider = ({ children }) => {
     };
 
 
-
-    // if (isLoading) return <div>Loading...</div>;
-    // if (error) return <div>Error: {error.message}</div>;
-
     return (
         <ValidatePermissionContext.Provider value={{ data, isLoading, error, validatePermission }}>
             {children}

@@ -54,6 +54,12 @@ const addRoles = async (req, res) => {
         res.status(201).json({ message: 'Role created successfully', role: newRole });
     } catch (error) {
         console.error('Error creating role:', error);
+        if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({
+                status: 'Duplicate Entry',
+                message: 'Validation failed',
+            });
+        }
         res.status(500).json({ error: 'Failed to create role' });
     }
 };

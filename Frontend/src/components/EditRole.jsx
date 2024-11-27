@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 import { usePermission } from '../context/PermissionContext';
+import api from '../middleware/auth';
 
 const EditRole = ({ role }) => {
 
@@ -10,11 +11,11 @@ const EditRole = ({ role }) => {
     const [selectedPermissions, setSelectedPermissions] = useState(role.Permissions.map(permission => permission.id));
     const queryClient = useQueryClient();
     const { closeModal } = useModal();
-    const { permissions, isLoading, error } = usePermission();
+    const { permissions } = usePermission();
 
     // Function to edit a role
     const editRole = async () => {
-        const { data } = await axios.put(`http://localhost:8080/role/edit/${role.id}`, {
+        const { data } = await api.put(`/role/edit/${role.id}`, {
             roleName: formData.roleName,
             permissions: selectedPermissions,
         });

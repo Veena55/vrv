@@ -4,6 +4,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
+import api from '../middleware/auth';
+import { toast } from 'react-toastify';
 
 const AddUser = () => {
     const [formData, setformData] = useState({ username: '', email: '', passwordHash: '', roleId: null, isActive: false });
@@ -14,19 +16,19 @@ const AddUser = () => {
 
     //fetch all roles
     const getAllRoles = async () => {
-        const { data } = await axios.get('http://localhost:8080/role/');
+        const { data } = await api.get('/role/');
         console.log(data);
         return data;
     }
 
     //fetch all users
     const addUser = async () => {
-        const { data } = await axios.post('http://localhost:8080/user/add', formData);
+        const { data } = await api.post('/user/add', formData);
         return data;
     }
 
     //call allUsers with useQuery
-    const { data: roles, isLoading, error } = useQuery({ queryKey: ['fetchRoles'], queryFn: getAllRoles });
+    const { data: roles } = useQuery({ queryKey: ['fetchRoles'], queryFn: getAllRoles });
     console.log(roles);
 
     //create mutation
@@ -44,14 +46,12 @@ const AddUser = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Basic validation
-        // if (!formData.username || !formData.email) {
-        //     alert('Please fill in all fields');
-        //     return;
-        // }
+        if (!formData.username || !formData.email || !formData.passwordHash) {
+            toast.error('Please fill in all fields');
+            return;
+        }
 
         mutation.mutate(formData);
-        // setformData({ username: '', email: '', passwordHash: '', roleId: '', isActive: false }); // Reset after submission
     }
 
     const handleChangeData = (e) => {

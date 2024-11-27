@@ -1,24 +1,22 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 import { usePermission } from '../context/PermissionContext';
+import api from '../middleware/auth';
 
 const EditPermission = ({ permission }) => {
-    console.log(permission.id + "bhhjjh");
 
     const [formData, setformData] = useState({ permissionName: permission.permissionName });
     const queryClient = useQueryClient();
     const { closeModal } = useModal();
     const { permissions, isLoading, error } = usePermission();
 
-    // console.log(permissions);
+
 
     //edit
     const editPermission = async () => {
-        const { data } = await axios.put(`http://localhost:8080/permission/edit/${permission.id}`, formData);
+        const { data } = await api.put(`/permission/edit/${permission.id}`, formData);
         return data;
     }
 

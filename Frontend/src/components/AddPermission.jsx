@@ -1,36 +1,23 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 import { usePermission } from '../context/PermissionContext';
+import api from '../middleware/auth';
 
 const AddPermission = () => {
     const [formData, setformData] = useState({ permissionName: '' });
-    // const [role, setRole] = useState({ id: null, name: '' });s
     const queryClient = useQueryClient();
     const { closeModal } = useModal();
     const { permissions, isLoading, error } = usePermission();
 
-    console.log(permissions);
 
-    //fetch all roles
-    // const getAllRoles = async () => {
-    //     const { data } = await axios.get('http://localhost:8080/role/');
-    //     console.log(data);
-    //     return data;
-    // }
 
-    //fetch all users
     const addPermission = async () => {
-        const { data } = await axios.post('http://localhost:8080/permission/add', formData);
+        const { data } = await api.post('/permission/add', formData);
         return data;
     }
 
-    //call allUsers with useQuery
-    // const { data: roles, isLoading, error } = useQuery({ queryKey: ['fetchRoles'], queryFn: getAllRoles });
-    // console.log(roles);
+
 
     //create mutation
     const mutation = useMutation({

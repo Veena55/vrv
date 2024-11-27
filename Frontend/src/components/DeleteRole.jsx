@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useModal } from '../context/ModalContext'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import api from '../middleware/auth';
 
 const DeleteRole = ({ data }) => {
     const queryClient = useQueryClient();
@@ -12,7 +13,7 @@ const DeleteRole = ({ data }) => {
 
     // delete user function
     const deleteUser = async () => {
-        await axios.delete(`http://localhost:8080/role/delete/${data.id}`)
+        await api.delete(`/role/delete/${data.id}`)
     }
 
     const mutation = useMutation({

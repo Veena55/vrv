@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
+import api from '../middleware/auth';
 
 const EditUser = ({ user }) => {
     const [formData, setformData] = useState({ username: user.username, email: user.email, roleId: null, isActive: user.isActive === '1' });
@@ -22,13 +23,13 @@ const EditUser = ({ user }) => {
 
     //edit user
     const editUser = async () => {
-        const { data } = await axios.put(`http://localhost:8080/user/edit/${user.id}`, formData);
+        const { data } = await api.put(`/user/edit/${user.id}`, formData);
         return data;
     }
 
     //fetch roles with useQuery
     const { data: roles, isLoading, error } = useQuery({ queryKey: ['fetchRoles'], queryFn: getAllRoles });
-    // console.log(roles);
+
 
     //create mutation
     const mutation = useMutation({
@@ -46,13 +47,12 @@ const EditUser = ({ user }) => {
         e.preventDefault();
 
         // Basic validation
-        // if (!formData.username || !formData.email) {
-        //     alert('Please fill in all fields');
-        //     return;
-        // }
+        if (!formData.username || !formData.email) {
+            alert('Please fill in all fields');
+            return;
+        }
 
         mutation.mutate(formData);
-        // setformData({ username: '', email: '', passwordHash: '', roleId: '', isActive: false }); // Reset after submission
     }
 
     const handleChangeData = (e) => {

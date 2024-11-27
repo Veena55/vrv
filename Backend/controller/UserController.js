@@ -20,9 +20,19 @@ const getUserById = async (id) => {
 }
 
 const addUsers = async (req, res, next) => {
-    console.log(req.body);
-    const users = await User.create(req.body);
-    res.status(201).json(users);
+    try {
+        const users = await User.create(req.body);
+        return res.status(201).json(users);
+    } catch (error) {
+        if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({
+                status: 'Duplicate Entry',
+                message: 'Validation failed',
+            });
+        }
+        return res.status(500).json("Internal Error");
+    }
+
 }
 
 const editUser = async (req, res, next) => {

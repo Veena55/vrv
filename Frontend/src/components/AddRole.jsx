@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useModal } from '../context/ModalContext';
 import { usePermission } from '../context/PermissionContext';
+import api from '../middleware/auth';
 
 const AddRole = () => {
     const [formData, setFormData] = useState({ roleName: '' });
@@ -13,7 +14,7 @@ const AddRole = () => {
 
     // Function to add a role
     const addRole = async () => {
-        const { data } = await axios.post('http://localhost:8080/role/add', {
+        const { data } = await api.post('/role/add', {
             roleName: formData.roleName,
             permissions: selectedPermissions,
         });

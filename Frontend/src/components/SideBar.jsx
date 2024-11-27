@@ -10,7 +10,7 @@ import { useMenu } from '../context/MenuContext'
 const SideBar = () => {
     const navigate = useNavigate();
     const { theme, darkTheme, lightTheme } = useTheme();
-    const { menu, handleMenu } = useMenu();
+    const { handleMenu } = useMenu();
 
     const handleLogout = async () => {
         console.log("hoooo")

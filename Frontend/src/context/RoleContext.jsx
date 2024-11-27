@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import api from "../middleware/auth";
 
 const RoleContext = createContext();
 
@@ -9,7 +9,7 @@ export const useRole = () => useContext(RoleContext);
 export const RoleProvider = ({ children }) => {
 
     const getAllRoles = async () => {
-        const { data } = await axios.get('http://localhost:8080/role/');
+        const { data } = await api.get('/role/');
         return data;
     }
 

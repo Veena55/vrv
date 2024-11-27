@@ -12,9 +12,9 @@ import { useValidatePermission } from '../context/ValidatePermissionContext';
 
 const Users = () => {
     const { theme } = useTheme();
-    const { data, validatePermission } = useValidatePermission();
+    const { validatePermission } = useValidatePermission();
     const { isModalOpen, openModal, getModalContent } = useModal();
-    const { users, isLoading, error } = useUser();
+    const { users, isLoading } = useUser();
 
     if (isLoading) {
         return <p>Loading Data...</p>
@@ -86,8 +86,6 @@ const Users = () => {
             })}
 
             {isModalOpen && <Modal />}
-
-            {/* {(modal.isVisible) && <Modal children={modal.component} title={modal.title} isVisible={setModal} />} */}
 
         </div >
     )

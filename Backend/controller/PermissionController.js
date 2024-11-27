@@ -28,8 +28,20 @@ const getPermissionById = async (id) => {
 }
 
 const addPermissions = async (req, res, next) => {
-    const permissions = await Permission.create(req.body);
-    res.status(201).json(permissions);
+    try {
+        const permissions = await Permission.create(req.body);
+        res.status(201).json(permissions);
+    } catch (error) {
+        if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).json({
+                status: 'Duplicate Entry',
+                message: 'Validation failed',
+            });
+        }
+        res.status(500).json({ error: 'Failed to create Permission' });
+
+    }
+
 }
 
 const editPermission = async (req, res, next) => {
