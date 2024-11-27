@@ -9,13 +9,21 @@ import { useUser } from '../context/UserContext';
 import DeleteUser from './DeleteUser';
 import { useTheme } from '../context/ThemeContext';
 import { useValidatePermission } from '../context/ValidatePermissionContext';
+import { useEffect, useState } from 'react';
 
 const Users = () => {
     const { theme } = useTheme();
     const { validatePermission } = useValidatePermission();
     const { isModalOpen, openModal, getModalContent } = useModal();
     const { users, isLoading } = useUser();
+    const [searchText, setSearchText] = useState('');
+    const [allUsers, setAllUsers] = useState([]);
 
+    useEffect(() => {
+        if (!isLoading) {
+            setAllUsers(users);
+        }
+    }, [users, isLoading]);
     if (isLoading) {
         return <p>Loading Data...</p>
     }
@@ -41,10 +49,33 @@ const Users = () => {
         }
     }
 
+
+    const handleSearch = (e) => {
+        console.log(e.target.value);
+        setSearchText(e.target.value)
+    }
+    const searchQuery = () => {
+        console.log(searchText);
+        const filteredUsers = users.filter(item => item.username.includes(searchText));
+        setAllUsers(filteredUsers);
+    }
+
+    const clearSearch = () => {
+        setSearchText('');
+        setAllUsers(users);
+    }
     return (
         <div className='px-5 pb-10 overflow-auto'>
             <div className='flex justify-end pb-5 gap-3'>
-
+                <div className="flex border rounded-lg bg-light items-center px-2">
+                    <input type="text" className='w-full focus-within:outline-none p-2 bg-light' placeholder='search user here' onChange={handleSearch} />
+                    <FontAwesomeIcon icon={faSearch} className='text-theme cursor-pointer' onClick={searchQuery} />
+                    {searchText && (
+                        <button onClick={clearSearch} className='ml-2 text-red-500'>
+                            Clear
+                        </button>
+                    )}
+                </div>
                 <button className='bg-theme px-3 py-1 border-theme border text-white rounded-md' onClick={() => handleModal(null, "add")}><FontAwesomeIcon icon={faPlus} /> Add</button>
             </div>
             <div className={`grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center py-2 px-5 rounded-lg ${theme == 'light' ? 'bg-light text-[#9a989a]' : 'bg-gray-800 text-white'}  font-semibold`}>
@@ -55,7 +86,7 @@ const Users = () => {
                 <div className='text-center'>Status</div>
                 <div className='text-center'>Action</div>
             </div>
-            {users && users.map((user, index) => {
+            {allUsers && allUsers.map((user, index) => {
                 return (
                     <div key={user.id} className={`grid grid-cols-[80px_1fr_1.5fr_.5fr_1fr_1fr] items-center mt-1 py-2 px-5 rounded-lg ${theme == 'light' ? (index % 2 == 0 ? 'bg-white' : 'bg-light') : (index % 2 == 0 ? 'bg-gray-900 text-white' : 'bg-black text-white')}`}>
                         <div>

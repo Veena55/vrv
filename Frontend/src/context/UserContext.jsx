@@ -15,11 +15,7 @@ export const UserProvider = ({ children }) => {
     }
 
     const { data, isLoading, error } = useQuery({ queryKey: ['fetchUsers'], queryFn: getAllUsers });
-    // console.log(data);
 
-
-
-    // setUsers((prev) => ({ ...prev, data }))
     return (
         <UserContext.Provider value={{ users: data, isLoading, error }}>
             {children}
