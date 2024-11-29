@@ -76,12 +76,12 @@ git clone https://github.com/Veena55/vrv.git
 
 7) Insert one dummy user data as a role of ADMIN with roleId. using this script:-
 	
- 	INSERT INTO `vrv_db`.`users` (`username`, `email`, `passwordHash`, `isActive`, `createdAt`, `updatedAt`, `roleId`) VALUES("veena",  "veena@gmail.com",  "abc@098", 1, CURRENT_DATE(), CURRENT_DATE(), 1);
+ 		INSERT INTO `vrv_db`.`users` (`username`, `email`, `passwordHash`, `isActive`, `createdAt`, `updatedAt`, `roleId`) VALUES("veena",  "veena@gmail.com",  "abc@098", 1, CURRENT_DATE(), CURRENT_DATE(), 1);
    
-8)insert data into permission using this script:-
+8) Insert data into permission using this script:-
 
-	INSERT INTO `vrv_db`.`permissions` (`permissionName`, `createdAt`, `updatedAt`) VALUES ("Read", CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),("Write", CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
-	("Modify", CURRENT_TIMESTAMP(), CURRENT
+		INSERT INTO `vrv_db`.`permissions` (`permissionName`, `createdAt`, `updatedAt`) VALUES ("Read", CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),("Write", CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
+		("Modify", CURRENT_TIMESTAMP(), CURRENT
 
 4) nodemon server.js (will create all modles)
 
