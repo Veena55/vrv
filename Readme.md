@@ -25,28 +25,28 @@ Support read only  (all users,role,permission)
 
 **Tech Stack
 
-****Frontend**:
+**Frontend**:
 
-React.js: Frontend framework.
+	React.js: Frontend framework.
 
-React Context API: State management.
+	React Context API: State management.
 
-React Toastify: Notifications for success, error, and info messages.
+	React Toastify: Notifications for success, error, and info messages.
 
-FontAwesome: Icons for user interface.
+	FontAwesome: Icons for user interface.
 
-Tailwind CSS: for styling.
+	Tailwind CSS: for styling.
 
 
 **Backend**:
 
-**Node.js** and Express.js: Backend server and APIs.
+	**Node.js** and Express.js: Backend server and APIs.
 
-**MySQL**: Database for storing users, roles, and permissions.
+	**MySQL**: Database for storing users, roles, and permissions.
 
 
 **Version Control**
-Github
+	Github
 
 **Project Setup
 #### **
