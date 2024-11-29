@@ -24,12 +24,20 @@ Manager can add,modify,read (all users, can't manage roles and permissions)
 Support read only  (all users,role,permission)
 
 **Tech Stack
+
 ****Frontend**:
+
 React.js: Frontend framework.
+
 React Context API: State management.
+
 React Toastify: Notifications for success, error, and info messages.
+
 FontAwesome: Icons for user interface.
+
 Tailwind CSS: for styling.
+
+
 **Backend**:
 
 **Node.js** and Express.js: Backend server and APIs.
