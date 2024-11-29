@@ -59,26 +59,28 @@ MySQL (or any compatible relational database)
 git clone https://github.com/Veena55/vrv.git
 2) cd Backend
 3) npm install
-4) Setup env file for --
-    DB_HOST=
-    DB_USERNAME=
-    DB_PASSWORD=
-    DB_NAME=
-    SERVER_PORT=8080
-    SECRET_KEY=
-5) Create database with name vrv_db;
+4) Setup env file for
+   
+	    DB_HOST=
+	    DB_USERNAME=
+	    DB_PASSWORD=
+	    DB_NAME=
+	    SERVER_PORT=8080
+	    SECRET_KEY=
+   
+6) Create database with name vrv_db;
 
 		create database vrv_db;
   
-6) insert default roles [**Admin**] using the this script:-
+7) insert default roles [**Admin**] using the this script:-
 
     	INSERT INTO `vrv_db`.`roles` (`roleName`, `createdAt`, `updatedAt`) VALUES ("ABC", CURRENT_DATE(), CURRENT_DATE());
 
-7) Insert one dummy user data as a role of ADMIN with roleId. using this script:-
+8) Insert one dummy user data as a role of ADMIN with roleId. using this script:-
 	
  		INSERT INTO `vrv_db`.`users` (`username`, `email`, `passwordHash`, `isActive`, `createdAt`, `updatedAt`, `roleId`) VALUES("veena",  "veena@gmail.com",  "abc@098", 1, CURRENT_DATE(), CURRENT_DATE(), 1);
    
-8) Insert data into permission using this script:-
+9) Insert data into permission using this script:-
 
 		INSERT INTO `vrv_db`.`permissions` (`permissionName`, `createdAt`, `updatedAt`) VALUES ("Read", CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),("Write", CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
 		("Modify", CURRENT_TIMESTAMP(), CURRENT
