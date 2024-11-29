@@ -64,7 +64,7 @@ git clone https://github.com/Veena55/vrv.git
 	    DB_HOST=
 	    DB_USERNAME=
 	    DB_PASSWORD=
-	    DB_NAME=
+	    DB_NAME=vrv_db
 	    SERVER_PORT=8080
 	    SECRET_KEY=
    
