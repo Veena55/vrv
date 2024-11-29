@@ -70,11 +70,11 @@ git clone https://github.com/Veena55/vrv.git
 
 		create database vrv_db;
   
- 7) insert default roles [**Admin**] using the this script:-
+6) insert default roles [**Admin**] using the this script:-
 
     	INSERT INTO `vrv_db`.`roles` (`roleName`, `createdAt`, `updatedAt`) VALUES ("ABC", CURRENT_DATE(), CURRENT_DATE());
 
-7 Insert one dummy user data as a role of ADMIN with roleId. using this script:-
+7) Insert one dummy user data as a role of ADMIN with roleId. using this script:-
 	
  	INSERT INTO `vrv_db`.`users` (`username`, `email`, `passwordHash`, `isActive`, `createdAt`, `updatedAt`, `roleId`) VALUES("veena",  "veena@gmail.com",  "abc@098", 1, CURRENT_DATE(), CURRENT_DATE(), 1);
    
