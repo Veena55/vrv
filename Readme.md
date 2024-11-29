@@ -49,9 +49,14 @@ git clone https://github.com/Veena55/vrv.git
     DB_USERNAME=
     DB_PASSWORD=
     DB_NAME=
-    SERVER_PORT=
+    SERVER_PORT=8080
     SECRET_KEY=
-4) nodemon server.js
+5) Create database
+6) Insert one dummy user data as a role of ADMIN with roleId.
+7) insert default roles (Admin,Manger,Support)
+8)  insert default permissions (Read,Write,Modify)
+4) nodemon server.js (will create all modles)
+
 5)** Setup Frontend**
     	Steps:
 		1) navigate to root folder then cd Frontend
