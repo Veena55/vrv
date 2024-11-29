@@ -31,8 +31,10 @@ React Toastify: Notifications for success, error, and info messages.
 FontAwesome: Icons for user interface.
 Tailwind CSS: for styling.
 **Backend**:
-Node.js and Express.js: Backend server and APIs.
-MySQL: Database for storing users, roles, and permissions.
+
+**Node.js** and Express.js: Backend server and APIs.
+
+**MySQL**: Database for storing users, roles, and permissions.
 
 
 **Version Control**
