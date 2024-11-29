@@ -66,7 +66,7 @@ const Users = () => {
     }
     return (
         <div className='px-5 pb-10 overflow-auto'>
-            <div className='flex justify-end pb-5 gap-3'>
+            <div className='flex justify-between flex-col md:flex-row lg:justify-end py-5 lg:pb-5 gap-3'>
                 <div className="flex border rounded-lg bg-light items-center px-2">
                     <input type="text" className='w-full focus-within:outline-none p-2 bg-light' placeholder='search user here' onChange={handleSearch} />
                     <FontAwesomeIcon icon={faSearch} className='text-theme cursor-pointer' onClick={searchQuery} />
