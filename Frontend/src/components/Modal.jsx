@@ -6,7 +6,6 @@ const Modal = () => {
     const { isModalOpen, closeModal, modalContent } = useModal();
     if (!isModalOpen) return null;
     console.log(modalContent, "---content");
-
     return (
         <div className="fixed flex justify-center items-center h-screen inset-0 backdrop-blur-[2px] backdrop-brightness-50">
             <div className="bg-white opacity-1 fixed z-50 shadow-2xl shadow-light_theme rounded-lg lg:w-1/2">
@@ -20,5 +19,4 @@ const Modal = () => {
         </div>
     )
 }
-
 export default Modal

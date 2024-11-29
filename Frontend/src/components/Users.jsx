@@ -59,7 +59,7 @@ const Users = () => {
         const filteredUsers = users.filter(item => item.username.includes(searchText));
         setAllUsers(filteredUsers);
     }
-
+    //fetch all users
     const clearSearch = () => {
         setSearchText('');
         setAllUsers(users);
@@ -68,7 +68,7 @@ const Users = () => {
         <div className='px-5 pb-10 overflow-auto'>
             <div className='flex justify-between flex-col md:flex-row lg:justify-end py-5 lg:pb-5 gap-3'>
                 <div className="flex border rounded-lg bg-light items-center px-2">
-                    <input type="text" className='w-full focus-within:outline-none p-2 bg-light' placeholder='search user here' onChange={handleSearch} />
+                    <input type="text" className='w-full focus-within:outline-none p-2 bg-light' value={searchText} placeholder='search user here' onChange={handleSearch} />
                     <FontAwesomeIcon icon={faSearch} className='text-theme cursor-pointer' onClick={searchQuery} />
                     {searchText && (
                         <button onClick={clearSearch} className='ml-2 text-red-500'>
